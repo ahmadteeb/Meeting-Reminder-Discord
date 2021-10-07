@@ -8,12 +8,25 @@ from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
 Client = commands.Bot(command_prefix = '#', intents=intents)
+day = os.environ['day']
 
-Server_ID = 895440123578187836
 
 @Client.event
 async def on_ready():
-    every().thursday.at(os.environ['schedule_time']).do(Remind_Members)
+    if(day == "saterday"):
+        every().saterday.at(os.environ['schedule_time']).do(Remind_Members)
+    elif(day == "sunday"):
+        every().sunday.at(os.environ['schedule_time']).do(Remind_Members)
+    elif(day == "monday"):
+        every().monday.at(os.environ['schedule_time']).do(Remind_Members)
+    elif(day == "tuesday"):
+        every().tuesday.at(os.environ['schedule_time']).do(Remind_Members)
+    elif(day == "wednsday"):
+        every().wednsday.at(os.environ['schedule_time']).do(Remind_Members)
+    elif(day == "thursday"):
+        every().thursday.at(os.environ['schedule_time']).do(Remind_Members)
+    else:
+        every().friday.at(os.environ['schedule_time']).do(Remind_Members)
     loop.start()
     print("I'm Ready")
 
