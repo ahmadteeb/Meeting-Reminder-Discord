@@ -8,11 +8,11 @@ from discord.ext import commands
 intents = discord.Intents.default()
 intents.members = True
 Client = commands.Bot(command_prefix = '#', intents=intents)
-day = os.environ['day']
 
 
 @Client.event
 async def on_ready():
+    day = os.environ['day']
     if(day == "saterday"):
         every().saterday.at(os.environ['schedule_time']).do(Remind_Members)
     elif(day == "sunday"):
@@ -39,8 +39,8 @@ async def Remind_Members():
     Members = Client.get_guild(int(os.environ['server_id'])).members
     for member in Members:
         if(not member.bot):
-            embed=discord.Embed(title="Meeting Invitiation", description="t3al wala 3al meeting")
+            embed=discord.Embed(title=os.environ['title'], description=os.environ['desc'])
             await member.send(embed=embed)
 
 if __name__ == "__main__":
-    Client.run('ODk1NDM2NDI1MjcxNjAzMjMx.YV4iKA.LOVbkDiWUNCqJSPcuqSHUFrxCoo')
+    Client.run(os.environ['token'])
