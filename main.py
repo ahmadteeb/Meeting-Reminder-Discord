@@ -13,8 +13,8 @@ Client = commands.Bot(command_prefix = '#', intents=intents)
 @Client.event
 async def on_ready():
     day = os.environ['day']
-    if(day == "saterday"):
-        every().saterday.at(os.environ['schedule_time']).do(Remind_Members)
+    if(day == "saturday"):
+        every().saturday.at(os.environ['schedule_time']).do(Remind_Members)
     elif(day == "sunday"):
         every().sunday.at(os.environ['schedule_time']).do(Remind_Members)
     elif(day == "monday"):
