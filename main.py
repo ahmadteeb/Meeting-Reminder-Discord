@@ -1,5 +1,6 @@
 import discord
 import os
+import openai
 from dotenv import load_dotenv
 from discord import client
 from discord.ext import tasks
@@ -10,8 +11,13 @@ load_dotenv()
 
 intents = discord.Intents.default()
 intents.members = True
-client = commands.Bot(command_prefix = '#', intents=intents)
+client = commands.Bot(command_prefix = '.', intents=intents)
 
+openai.organization = "org-PyxSdnTqc76R0bPmDWRAk1Gu"
+openai.api_key = os.environ['GPTtoken']
+openai.Model.list()
+
+model_engine = "gpt-3.5-turbo"
 
 @client.event
 async def on_ready():
@@ -52,11 +58,28 @@ async def on_voice_state_update(member, before, after):
 
         title = f"{ member.name } Connected"
         desc = f"Channel: { after.channel }"
-        embed=discord.Embed(title= title, description=desc)
+        embed=discord.Embed(title=title, description=desc)
 
         for mem in Members:
             if(not mem.bot and mem.id != member.id):
                 await mem.send(embed=embed)
+
+@client.command(name='chat')
+async def chat(ctx, arg):
+    
+    chatCompletion = openai.ChatCompletion.create(
+        model=model_engine,
+        messages=[
+        {'role': "user", 'content': arg},
+        ]
+    )
+
+    result = ''
+
+    for choice in chatCompletion.choices:
+        result += choice.message.content
+
+    await ctx.send(result)
 
 if __name__ == "__main__":
     client.run(os.environ['token'])

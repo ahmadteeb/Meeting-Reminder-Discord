@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\ahmad\Desktop\Mini projects\Python Projects\Discord Bots\Meeting-Reminder-Discord\venv
+set VIRTUAL_ENV=C:\Users\ahmad\Desktop\Mini projects\Python Projects\Discord Bots\Server Keeper\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
