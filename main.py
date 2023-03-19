@@ -11,6 +11,7 @@ load_dotenv()
 
 intents = discord.Intents.default()
 intents.members = True
+intents.message_content = True
 client = commands.Bot(command_prefix = '.', intents=intents)
 
 openai.organization = "org-PyxSdnTqc76R0bPmDWRAk1Gu"
@@ -64,9 +65,9 @@ async def on_voice_state_update(member, before, after):
             if(not mem.bot and mem.id != member.id):
                 await mem.send(embed=embed)
 
-@client.command(name='chat')
+@client.command()
 async def chat(ctx, arg):
-    
+   
     chatCompletion = openai.ChatCompletion.create(
         model=model_engine,
         messages=[
